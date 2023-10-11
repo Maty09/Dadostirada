@@ -21,13 +21,15 @@ function contarApariciones(resultados) {
   });
   return conteo;
 }
-
 const cantidadLanzamientos = prompt("Ingrese la cantidad de veces que desea lanzar los dados:");
 const resultados = simularLanzamientosDeDados(cantidadLanzamientos);
 const conteo = contarApariciones(resultados);
 
-console.log("Resultados de los lanzamientos:");
-console.table(resultados, ["Suma"]);
+// Filtrar las sumas con repeticiones
+const sumasConRepeticiones = Object.keys(conteo).map(Number);
 
-console.log("Conteo de apariciones:");
-console.table(conteo, ["Suma", "Apariciones"]);
+// Crear una tabla combinada solo con las sumas que tienen repeticiones
+const tablaCombinada = sumasConRepeticiones.map(suma => ({ Suma: suma, Apariciones: conteo[suma] }));
+
+console.log("Resultados de los lanzamientos y conteo de apariciones:");
+console.table(tablaCombinada, ["Suma", "Apariciones"]);
